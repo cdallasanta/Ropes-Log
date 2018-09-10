@@ -1,17 +1,3 @@
-Sub UserForm_initialize()
-
-'initialize element combobox with all items in column A in the "key" sheet
-Dim i As Long, LastRow As Long, ws As Worksheet
-Set ws = Sheets("Key")
-LastRow = ws.Range("a" & Rows.Count).End(xlUp).Row
-
-For i = 2 To LastRow
-    Me.cmbElement.AddItem ws.Cells(i, "A").Value
-    Next i
-    
-Me.txtDate.Value = "mm/dd/yyyy"
-
-End Sub
 Sub cmbElement_change()
 Dim i As Long, LastRow As Long, ws As Worksheet
 Set ws = Sheets("Key")
