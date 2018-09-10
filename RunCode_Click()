@@ -1,0 +1,95 @@
+Private Sub RunCode_Click()
+
+'ensure element is selected
+
+If Me.cmbElement = "" Then
+    MsgBox "Please select an element."
+    Exit Sub
+End If
+
+'ensure date is filled
+If Me.txtDate = "mm/dd/yyyy" Then
+    MsgBox "Please fill out the date box."
+    Exit Sub
+End If
+
+'ensure initials are filled
+If Me.initials = "" Then
+    MsgBox "Please initial the box at the bottom."
+    Exit Sub
+End If
+
+'set sheet name and LastRow
+Dim sheet As String, LastRow As Long, ws As Worksheet, b As Variant
+sheet = Me.cmbElement.Value
+Set ws = ThisWorkbook.Worksheets(sheet)
+
+'rope 1, column A, b#c1
+LastRow = ws.Range("A" & Rows.Count).End(xlUp).Row
+If Me.b1c1 <> "" Or Me.b2c1 <> "" Or Me.b3c1 <> "" Or Me.b4c1 <> "" Then
+    ws.Cells(LastRow + 1, "A").Value = Me.txtDate
+    ws.Cells(LastRow + 1, "A").Offset(0, 1).Value = Me.txtGroup
+    ws.Cells(LastRow + 1, "A").Offset(0, 8).Value = Me.initials
+End If
+
+For b = 1 To 4
+    'adds climbs
+    ws.Cells(LastRow + 1, "A").Offset(0, b + 1).Value = Me.Controls("b" & b & "c1").Value
+Next b
+
+
+'rope 2, column K, b#c2
+LastRow = ws.Range("K" & Rows.Count).End(xlUp).Row
+If Me.b1c2 <> "" Or Me.b2c2 <> "" Or Me.b3c2 <> "" Or Me.b4c2 <> "" Then
+    ws.Cells(LastRow + 1, "K").Value = Me.txtDate
+    ws.Cells(LastRow + 1, "K").Offset(0, 1).Value = Me.txtGroup
+    ws.Cells(LastRow + 1, "K").Offset(0, 8).Value = Me.initials
+End If
+
+For b = 1 To 4
+    'adds climbs
+    ws.Cells(LastRow + 1, "K").Offset(0, b + 1).Value = Me.Controls("b" & b & "c2").Value
+Next b
+
+'rope 3, column U, b#c3
+LastRow = ws.Range("U" & Rows.Count).End(xlUp).Row
+If Me.b1c3 <> "" Or Me.b2c3 <> "" Or Me.b3c3 <> "" Or Me.b4c3 <> "" Then
+    ws.Cells(LastRow + 1, "U").Value = Me.txtDate
+    ws.Cells(LastRow + 1, "U").Offset(0, 1).Value = Me.txtGroup
+    ws.Cells(LastRow + 1, "U").Offset(0, 8).Value = Me.initials
+End If
+
+For b = 1 To 4
+    'adds climbs
+    ws.Cells(LastRow + 1, "U").Offset(0, b + 1).Value = Me.Controls("b" & b & "c3").Value
+Next b
+
+'rope 4, column AE, b#c4
+LastRow = ws.Range("AE" & Rows.Count).End(xlUp).Row
+If Me.b1c4 <> "" Or Me.b2c4 <> "" Or Me.b3c4 <> "" Or Me.b4c4 <> "" Then
+    ws.Cells(LastRow + 1, "AE").Value = Me.txtDate
+    ws.Cells(LastRow + 1, "AE").Offset(0, 1).Value = Me.txtGroup
+    ws.Cells(LastRow + 1, "AE").Offset(0, 8).Value = Me.initials
+End If
+
+For b = 1 To 4
+    'adds climbs
+    ws.Cells(LastRow + 1, "AE").Offset(0, b + 1).Value = Me.Controls("b" & b & "c4").Value
+Next b
+
+'clear climbs and date
+Dim c As Long
+For b = 1 To 4
+    For c = 1 To 4
+        Me.Controls("b" & b & "c" & c) = ""
+    Next c
+Next b
+
+With Me.txtDate
+    .Value = "mm/dd/yyyy"
+    .SetFocus
+    .SelStart = 0
+    .SelLength = Len(.Text)
+End With
+
+End Sub
