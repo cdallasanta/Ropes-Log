@@ -1,0 +1,88 @@
+Sub UserForm_initialize()
+
+'initialize element combobox with all items in column A in the "key" sheet
+Dim i As Long, LastRow As Long, ws As Worksheet
+Set ws = Sheets("Key")
+LastRow = ws.Range("a" & Rows.Count).End(xlUp).Row
+
+For i = 2 To LastRow
+    Me.cmbElement.AddItem ws.Cells(i, "A").Value
+    Next i
+    
+Me.txtDate.Value = "mm/dd/yyyy"
+
+End Sub
+Sub cmbElement_change()
+Dim i As Long, LastRow As Long, ws As Worksheet
+Set ws = Sheets("Key")
+LastRow = ws.Range("a" & Rows.Count).End(xlUp).Row
+
+'get block 1 rope and pcord names from worksheet "key"
+For i = 2 To LastRow
+    If Me.cmbElement.Value = ws.Cells(i, "A") Then
+        Me.b1Rope1 = ws.Cells(i, "B")
+        Me.b1pcord1 = ws.Cells(i, "C")
+        Me.b1Rope2 = ws.Cells(i, "D")
+        Me.b1pcord2 = ws.Cells(i, "E")
+        Me.b1Rope3 = ws.Cells(i, "F")
+        Me.b1pcord3 = ws.Cells(i, "G")
+        Me.b1Rope4 = ws.Cells(i, "H")
+        Me.b1pcord4 = ws.Cells(i, "I")
+    End If
+Next i
+
+'copy b1 rope and pcord into other blocks
+Dim b As Long, r As Long, p As Long
+For b = 2 To 4
+    For r = 1 To 4
+        Me.Controls("b" & b & "Rope" & r) = Me.Controls("b1Rope" & r)
+    Next r
+    For p = 1 To 4
+        Me.Controls("b" & b & "pcord" & p) = Me.Controls("b1pcord" & p)
+    Next
+Next b
+
+'change label names if there's no rope
+If Me.cmbElement = "Zipline" Then
+    For b = 1 To 4
+        Me.Controls("b" & b & "ropeLabel") = "Cable"
+        Me.Controls("b" & b & "pcordLabel") = ""
+    Next b
+End If
+If Me.cmbElement = "Uswings" Or Me.cmbElement = "Lswings" Then
+    For b = 1 To 4
+        Me.Controls("b" & b & "ropeLabel") = "Swing"
+        Me.Controls("b" & b & "pcordLabel") = ""
+    Next b
+End If
+
+'change labels back if leaving zip or swings
+If Me.cmbElement <> "Zipline" And Me.cmbElement <> "Uswings" And Me.cmbElement <> "Lswings" Then
+    For b = 1 To 4
+        Me.Controls("b" & b & "ropeLabel") = "Rope Color"
+        Me.Controls("b" & b & "pcordLabel") = "Pcord Color"
+    Next b
+End If
+
+'block climb boxes from tab order if there are no ropes
+For b = 1 To 4
+    For c = 1 To 4
+        If Me.Controls("b" & b & "rope" & c) = "" Then
+            Me.Controls("b" & b & "c" & c).TabStop = False
+            Me.Controls("b" & b & "c" & c).Locked = True
+        End If
+    Next c
+Next b
+
+'reintroduce climb box to tab order if rope is there
+For b = 1 To 4
+    For c = 1 To 4
+        If Me.Controls("b" & b & "rope" & c) <> "" Then
+            Me.Controls("b" & b & "c" & c).TabStop = True
+            Me.Controls("b" & b & "c" & c).Locked = False
+        End If
+    Next c
+Next b
+
+
+End Sub
