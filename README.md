@@ -9,4 +9,4 @@ Element names often have "b1" or another number in front of it (1-4), denoting w
 
 cmb_element_change() shows the code when selecting an element using the combobox. It populates all rope and pcord names, as well as locks and remove from the tab order the blank spaces.
 
-run_program() is the code that runs when the data is submitted. It checks each rope, and if there were climbs, adds the date, group, climbs, and initials in the last row for each rope on that element. It then resets the box, leaving the element name and initials in place.
+RunCode_Click() is the code that runs when the data is submitted. It checks each rope, and if there were climbs, adds the date, group, climbs, and initials in the last row for each rope on that element. It then resets the box, leaving the element name and initials in place.
