@@ -1,7 +1,6 @@
 Private Sub RunCode_Click()
 
 'ensure element is selected
-
 If Me.cmbElement = "" Then
     MsgBox "Please select an element."
     Exit Sub
